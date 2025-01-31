@@ -87,21 +87,6 @@
             </div>
 
 
-            <div class="mb-3">
-                <label for="banner" class="form-label">URL da Logo</label>
-                <div class="input-group flex-nowrap">
-                    <span class="input-group-text" id="iconeLink"><i class="bi bi-link-45deg "></i></span>
-                <input type="text" class="form-control" id="urlLogoInput" placeholder="Ex.: https://example.com/banner.jpg"
-                    required>
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="logoPreview" class="form-label">Pré-visualização da Logo</label>
-                <div id="logoPreviewContainer" class="d-flex justify-content-center">
-                    <img id="logoPreview" src="https://example.com/images/logo.jpg" alt="Logo do Evento" class="img-fluid shadow-sm rounded" style="max-width: 300px; height: auto; transition: transform 0.3s ease;">
-                </div>
-            </div>
 
             <div class="mb-3 ">
                 <label for="url_site " class="form-label ">URL do Site</label>
@@ -158,7 +143,21 @@
 
             <button type="button" class="btn cadastrarEventoBtn w-100" id="cadastrarEventoBtn" onclick="cadastrarEvento()">Cadastrar Evento</button>
         </form>
+
+        <form action="/backend" method="POST" enctype="multipart/form-data">
+
+               <div class="mb-4">
+                <label for="imagemLogo" class="form-label visually-hidden">Imagem da Logo</label>
+                <div class="input-group">
+                   <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                </div>
+             </div>
+     
+             <button type="button" class="btn btn-primary w-100 mb-3" onclick="backend()">Utilizar IA</button>
+             
+             </form>
     </div>
+    
 
 
     <!-- Bootstrap JS -->

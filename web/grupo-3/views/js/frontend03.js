@@ -425,3 +425,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+const backend = async () => {
+    const imagemInput = document.querySelector("#image");
+
+    if (!imagemInput.files.length) {
+        alert("Selecione uma imagem para processar!");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("image", imagemInput.files[0]);
+
+    try {
+        const response = await axios.post("http://localhost:3003/backend", formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        console.log("Resultado da IA:", response.data);
+        alert("Imagem processada! Verifique o console.");
+    } catch (error) {
+        console.error("Erro ao processar imagem:", error);
+        alert("Erro ao processar imagem.");
+    }
+};

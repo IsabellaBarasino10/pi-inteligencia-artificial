@@ -6,15 +6,50 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const uniqueValidator = require('mongoose-unique-validator');
 const haversine = require('haversine-distance'); // Instale com npm: npm install haversine-distance
+var fs = require('fs');
+var path = require('path');
+const axios = require('axios');
+const FormData = require('form-data');
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const port = 3003
+const port = process.env.PORT || '3003'
 const uri = process.env.MONGODB_URL
 //const uri = 'mongodb://root:senha@mongo:27017/eventosgrupo3'
+
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads');
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 100000000 }, // 100MB file size limit
+    fileFilter: function(req, file, cb) {
+        checkFileType(file, cb);
+    }
+}).single('image');
+
+function checkFileType(file, cb) {
+    const filetypes = /jpeg|jpg|png|gif/;
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = filetypes.test(file.mimetype);
+  
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb('Error: Images only! (jpeg, jpg, png, gif)');
+    }
+  }
 
 // ================== SCHEMAS ================== //
 // Esquema para Eventos
@@ -39,6 +74,11 @@ const cadastroUsuarioSchema = mongoose.Schema({
     nome: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     senha: { type: String, required: true },
+    img:
+    {
+        data: Buffer,
+        contentType: String
+    }
 });
 cadastroUsuarioSchema.plugin(uniqueValidator);
 const Usuario = mongoose.model('Usuario', cadastroUsuarioSchema);
@@ -140,6 +180,27 @@ app.post('/loginUsuario', async (req, res) => {
         console.log(error)
     }
 })
+
+app.post('/backend', upload, async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: "Nenhuma imagem enviada" });
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append("image_file", fs.createReadStream(req.file.path));
+
+        // Corrigido para acessar a IA dentro do Docker
+        const response = await axios.post("http://backend-image:9001/imagens", formData, {
+            headers: formData.getHeaders(),
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        console.error("Erro ao enviar imagem para IA:", error.response?.data || error.message);
+        res.status(500).json({ error: "Falha ao processar imagem" });
+    }
+});
 
 // Rota GET - Listar Eventos Recentes
 app.get('/eventosRecentes', async (req, res) => {
