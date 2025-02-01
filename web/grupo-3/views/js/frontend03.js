@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-const KEY = "AIzaSyAvLOmxABck9rJATmaVFAeZXuE1vC2EN8s";
+const KEY = "";
 async function gerarNome(categoria) {
     try {
         const response = await axios.post(

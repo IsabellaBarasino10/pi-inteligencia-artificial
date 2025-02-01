@@ -14,3 +14,5 @@ Facilitar a organização e a participação em eventos, oferecendo uma interfac
 Foi utiliziado o upload de imagem para o cadastro de eventos
 Agora você pode gerar um nome personalizado para seu evento usando recursos de IA
 
+## Como executar o projeto
+O usuário deve gerar uma chave api neste link: https://aistudio.google.com/apikey. E incluí-la na linha 454 do arquivo frontend03.js
