@@ -87,10 +87,9 @@ const Usuario = mongoose.model('Usuario', cadastroUsuarioSchema);
 // Rota POST - Cadastrar Evento
 app.post("/cadastrar", async (req, res) => {
     const nome = req.body.nome
-    const dataInicio = new Date(req.body.dataInicio);
+    const dataInicio = req.body.dataInicio;
     const preco = req.body.preco 
     const descricao = req.body.descricao 
-    const urlLogo = req.body.urlLogo
     const urlSite = req.body.urlSite
     const cep = req.body.cep
     const endereco = req.body.endereco
@@ -100,25 +99,22 @@ app.post("/cadastrar", async (req, res) => {
     const categorias = req.body.categorias
     const dataCadastro = new Date()
 
-    if (isNaN(dataInicio.getTime())) {
-        return res.status(400).json({ mensagem: "Data de início inválida" });
-    }
-
     const eventoGrupo3 = new EventosGrupo3 ({
-        nome : nome,
-        dataInicio: dataInicio.toISOString(),
-        preco : preco, 
-        descricao : descricao,
-        urlLogo : urlLogo,
-        urlSite : urlSite, 
-        cep : cep,
-        endereco : endereco,
-        cidade : cidade, 
-        estado : estado, 
-        numero : numero,
-        categorias : categorias,
-        dataCadastro : dataCadastro
+        nome: nome,
+        dataInicio: dataInicio,
+        preco: preco, 
+        descricao: descricao,
+        urlLogo: urlLogo,
+        urlSite: urlSite, 
+        cep: cep,
+        endereco: endereco,
+        cidade: cidade, 
+        estado: estado, 
+        numero: numero,
+        categorias: categorias,
+        dataCadastro: dataCadastro
     })
+
     await eventoGrupo3.save()
     const eventos = await EventosGrupo3.find()
     res.json(eventos)
@@ -192,7 +188,7 @@ app.post('/backend', upload, async (req, res) => {
 
         // Corrigido para acessar a IA dentro do Docker
         const response = await axios.post("http://backend-image:9001/imagens", formData, {
-            headers: formData.getHeaders(),
+            headers: { 'Content-Type': 'multipart/form-data' }
         });
 
         res.json(response.data);

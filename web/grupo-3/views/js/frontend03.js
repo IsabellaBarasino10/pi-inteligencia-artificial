@@ -34,7 +34,7 @@ async function cadastrarEvento() {
     let dataInicioInput = document.querySelector('#dataInicioInput')
     let precoInput = document.querySelector('#precoInput');
     let descricaoInput = document.querySelector('#descricaoInput')
-    let urlLogoInput = document.querySelector('#urlLogoInput')
+    // let urlLogoInput = document.querySelector('#urlLogoInput')
     let urlSiteInput = document.querySelector('#urlSiteInput')
     let enderecoInput = document.querySelector('#enderecoInput')
     let cepInput = document.querySelector('#cepInput')
@@ -48,7 +48,7 @@ async function cadastrarEvento() {
     let dataInicio = formatarDataDDMMYYYY(dataInicioInput.value);
     let preco = parseFloat(precoInput.value)
     let descricao = descricaoInput.value
-    let urlLogo = urlLogoInput.value
+    // let urlLogo = urlLogoInput.value
     let urlSite = urlSiteInput.value
     let endereco = enderecoInput.value
     let cep = cepInput.value
@@ -58,14 +58,14 @@ async function cadastrarEvento() {
     let categorias = categoriasInput.value
 
 
-    if (nome && dataInicio && preco >= 0 && descricao && urlLogo && urlSite && cep && endereco && cidade && estado && numero && categorias) {
+    if (nome && dataInicio && preco >= 0 && descricao && urlSite && cep && endereco && cidade && estado && numero && categorias) {
 
         //limpa os campos que o usuário digitou
         nomeEventoInput.value = "";
         dataInicioInput.value = "";
         precoInput.value = "";
         descricaoInput.value = "";
-        urlLogoInput.value = "";
+        // urlLogoInput.value = "";
         urlSiteInput.value = "";
         enderecoInput.value = "";
         cepInput.value = "";
@@ -81,7 +81,6 @@ async function cadastrarEvento() {
             dataInicio,
             preco, 
             descricao,
-            urlLogo,
             urlSite, 
             endereco,
             cep,
@@ -92,7 +91,8 @@ async function cadastrarEvento() {
         })).data
 
              // Obtém a lista atualizada de eventos após o cadastro
-             const eventos = response.data;       
+             const eventos = response.data;  
+             console.log(eventos)     
 
         exibirAlerta('.alert-evento', 'Evento cadastrado com sucesso', ['show',
             'alert-success'], ['d-none'], 2000)
@@ -210,15 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-    const loginLink = document.querySelector("#cadastroLink");
+// document.addEventListener("DOMContentLoaded", () => {
+//     const loginLink = document.querySelector("#cadastroLink");
 
-    loginLink.addEventListener("click", (e) => {
-        e.preventDefault();
+//     loginLink.addEventListener("click", (e) => {
+//         e.preventDefault();
 
-        window.location.href = "cadastro.html";
-    });
-});
+//         window.location.href = "cadastro.html";
+//     });
+// });
 
 document.getElementById('logo-link').addEventListener('click', function () {
     window.location.href = 'index-03.html';
@@ -235,8 +235,8 @@ async function carregarCarrossel() {
         const carouselInner = document.querySelector('.carousel-inner');
         const carouselIndicators = document.querySelector('.carousel-indicators');
 
-        carouselInner.innerHTML = ''; // Limpa itens existentes
-        carouselIndicators.innerHTML = ''; // Limpa indicadores existentes
+        // carouselInner.innerHTML = ''; 
+        // carouselIndicators.innerHTML = ''; 
 
         eventos.forEach((evento, index) => {
             const activeClass = index === 0 ? 'active' : '';
@@ -266,42 +266,42 @@ async function carregarCarrossel() {
 document.addEventListener('DOMContentLoaded', carregarCarrossel);
 
  // Carrega o evento específico
- async function carregarEventoEspecifico() {
-    const params = new URLSearchParams(window.location.search);
-    const eventoId = params.get('id');
+//  async function carregarEventoEspecifico() {
+//     const params = new URLSearchParams(window.location.search);
+//     const eventoId = params.get('id');
 
-    if (!eventoId) {
-        console.error('ID do evento não fornecido.');
-        return;
-    }
+//     // if (!eventoId) {
+//     //     console.error('ID do evento não fornecido.');
+//     //     return;
+//     // }
 
-    try {
-        const response = await axios.get(`${protocolo}${baseURL}/evento/${eventoId}`);
-        const evento = response.data;
+//     try {
+//         const response = await axios.get(`${protocolo}${baseURL}/evento/${eventoId}`);
+//         const evento = response.data;
 
-        // Preenche os elementos HTML
-        document.getElementById('eventoTitulo').innerText = `${evento.nome}`;
-        document.getElementById('eventoLocal').innerText = `${evento.endereco}, ${evento.cidade} - ${evento.estado}`;
-        document.getElementById('eventoData').innerText = new Date(evento.dataInicio).toLocaleDateString();
-        document.getElementById('eventoCep').innerText = evento.cep;
-        document.getElementById('eventoDescricao').innerText = evento.descricao;
-        document.getElementById('eventoCategoria').innerText = evento.categorias;
-        document.getElementById('eventoPreco').innerText = `R$ ${evento.preco}`;
-        document.getElementById('eventoCadastro').innerText = new Date(evento.dataCadastro).toLocaleDateString();
+//         // Preenche os elementos HTML
+//         document.getElementById('eventoTitulo').innerText = `${evento.nome}`;
+//         document.getElementById('eventoLocal').innerText = `${evento.endereco}, ${evento.cidade} - ${evento.estado}`;
+//         document.getElementById('eventoData').innerText = new Date(evento.dataInicio).toLocaleDateString();
+//         document.getElementById('eventoCep').innerText = evento.cep;
+//         document.getElementById('eventoDescricao').innerText = evento.descricao;
+//         document.getElementById('eventoCategoria').innerText = evento.categorias;
+//         document.getElementById('eventoPreco').innerText = `R$ ${evento.preco}`;
+//         document.getElementById('eventoCadastro').innerText = new Date(evento.dataCadastro).toLocaleDateString();
 
-        // Atualiza o banner (opcional)
-        const banner = document.getElementById('eventoBanner');
-        if (evento.urlLogo) {
-            banner.src = evento.urlLogo;
-            banner.alt = evento.nome;
-        }
-    } catch (error) {
-        console.error('Erro ao carregar detalhes do evento:', error);
-    }
-}
+//         // Atualiza o banner (opcional)
+//         const banner = document.getElementById('eventoBanner');
+//         if (evento.urlLogo) {
+//             banner.src = evento.urlLogo;
+//             banner.alt = evento.nome;
+//         }
+//     } catch (error) {
+//         console.error('Erro ao carregar detalhes do evento:', error);
+//     }
+// }
 
 // Executa ao carregar a página
-document.addEventListener('DOMContentLoaded', carregarEventoEspecifico);
+// document.addEventListener('DOMContentLoaded', carregarEventoEspecifico);
 
 document.querySelector('form.d-flex').addEventListener('submit', async function (e) {
     e.preventDefault(); // Previne o comportamento padrão do formulário
@@ -378,31 +378,31 @@ document.querySelector('.nav-link i.bi-geo-alt-fill').parentElement.addEventList
     }
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const enderecoDefault = "São Paulo, Brasil"; // Endereço padrão caso não tenha entrada
-    const textoLocalizacao = document.querySelector('#localizacaoTexto');
-    const mapaLocalizacao = document.querySelector('#mapaLocalizacao');
+// document.addEventListener('DOMContentLoaded', async () => {
+//     const enderecoDefault = "São Paulo, Brasil"; // Endereço padrão caso não tenha entrada
+//     const textoLocalizacao = document.querySelector('#localizacaoTexto');
+//     const mapaLocalizacao = document.querySelector('#mapaLocalizacao');
 
-    try {
-        // Buscar coordenadas usando a API Nominatim
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(enderecoDefault)}&accept-language=pt-br`);
-        const data = await response.json();
+//     try {
+//         // Buscar coordenadas usando a API Nominatim
+//         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(enderecoDefault)}&accept-language=pt-br`);
+//         const data = await response.json();
 
-        if (data && data.length > 0) {
-            const { lat, lon, display_name } = data[0];
+//         if (data && data.length > 0) {
+//             const { lat, lon, display_name } = data[0];
 
-            // Atualizar texto e mapa
-            textoLocalizacao.innerText = `Endereço: ${display_name}`;
-            const mapaURL = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
-            mapaLocalizacao.innerHTML = `<iframe src="${mapaURL}" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>`;
-        } else {
-            textoLocalizacao.innerText = "Endereço padrão não encontrado.";
-        }
-    } catch (error) {
-        console.error("Erro ao carregar localização inicial:", error);
-        textoLocalizacao.innerText = "Erro ao buscar localização inicial.";
-    }
-});
+//             // Atualizar texto e mapa
+//             // textoLocalizacao.innerText = `Endereço: ${display_name}`;
+//             const mapaURL = `https://maps.google.com/maps?q=${lat},${lon}&z=15&output=embed`;
+//             mapaLocalizacao.innerHTML = `<iframe src="${mapaURL}" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>`;
+//         } else {
+//             textoLocalizacao.innerText = "Endereço padrão não encontrado.";
+//         }
+//     } catch (error) {
+//         console.error("Erro ao carregar localização inicial:", error);
+//         // textoLocalizacao.innerText = "Erro ao buscar localização inicial.";
+//     }
+// });
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -425,26 +425,75 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-const backend = async () => {
-    const imagemInput = document.querySelector("#image");
+// const backend = async () => {
+//     const imagemInput = document.querySelector("#image");
 
-    if (!imagemInput.files.length) {
-        alert("Selecione uma imagem para processar!");
+//     if (!imagemInput.files.length) {
+//         alert("Selecione uma imagem para processar!");
+//         return;
+//     }
+
+//     let formData = new FormData();
+//     formData.append("image", imagemInput.files[0]);
+
+//     try {
+//         const response = await axios.post("http://localhost:3003/backend", formData, {
+//             headers: { "Content-Type": "multipart/form-data" }
+//         })
+
+//         console.log("Resultado da IA:", response.data);
+//         alert("Imagem processada! Verifique o console.");
+//     } catch (error) {
+//         console.error("Erro ao processar imagem:", error);
+//         alert("Erro ao processar imagem.");
+//     }
+// }
+
+
+
+const KEY = "AIzaSyAvLOmxABck9rJATmaVFAeZXuE1vC2EN8s";
+async function gerarNome(categoria) {
+    try {
+        const response = await axios.post(
+            `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${KEY}`,
+            {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            {
+                                text: `Apresente um nome criativo com base na categoria do evento: "${categoria}". Não precisa utilizar caracteres especiais no texto, como #, **, etc.`
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                headers: { "Content-Type": "application/json" }
+            }
+        );
+        console.log("Resposta:", response.data)
+        const nome = response.data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
+        return nome|| "Nome não gerado"
+    } catch (error) {
+        console.error("Erro ao gerar a nome do evento:", error.response?.data || error.message)
+        return "";
+    }
+}
+async function atribuirNome() {
+    const nomeInput = document.getElementById("nomeEventoInput")
+    const categoriaInput = document.getElementById("categoriaInput").value
+    if (!categoriaInput) {
+        alert("Preencha a categoria para gerar o nome");
         return;
     }
-
-    let formData = new FormData();
-    formData.append("image", imagemInput.files[0]);
-
-    try {
-        const response = await axios.post("http://localhost:3003/backend", formData, {
-            headers: { "Content-Type": "multipart/form-data" }
-        });
-
-        console.log("Resultado da IA:", response.data);
-        alert("Imagem processada! Verifique o console.");
-    } catch (error) {
-        console.error("Erro ao processar imagem:", error);
-        alert("Erro ao processar imagem.");
+    nomeInput.value = "Gerando nome..."; 
+    const newName = await gerarNome(categoriaInput);
+    if (newName) {
+        nomeInput.value = newName;  
+    } else {
+        nomeInput.value = ""; 
+        alert("Erro ao gerar nome do evento");
     }
-};
+}
+document.getElementById("btn-gerar-nome").addEventListener("click", atribuirNome)

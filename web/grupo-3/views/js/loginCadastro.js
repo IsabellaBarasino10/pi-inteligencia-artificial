@@ -42,45 +42,42 @@ const fazerLogin = async () => {
 
 
 function validarESalvar() {
-    const senhaValida = verificarSenha();
-
-    if (senhaValida) {
-        cadastrarUsuario();
-    }
+    
+    cadastrarUsuario()
 }
 
-function verificarSenha() {
-    const senhaInput = document.getElementById("senhaCadastroInput").value;
-    const confirmarSenhaInput = document.getElementById("confirmarSenhaCadastroInput").value;
-    const mensagemErro = document.getElementById("mensagemErro");
+// function verificarSenha() {
+//     const senhaInput = document.getElementById("senhaCadastroInput").value;
+//     const confirmarSenhaInput = document.getElementById("confirmarSenhaCadastroInput").value;
+//     const mensagemErro = document.getElementById("mensagemErro");
 
-    const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+//     const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-    if (!senhaInput || !confirmarSenhaInput) {
-        mensagemErro.innerHTML = "Por favor, preencha os campos de senha.";
-        return false;
-    }
+//     if (!senhaInput || !confirmarSenhaInput) {
+//         mensagemErro.innerHTML = "Por favor, preencha os campos de senha.";
+//         return false;
+//     }
 
-    if (!regexSenhaForte.test(senhaInput)) {
-        mensagemErro.innerHTML = `
-            A senha deve conter:<br>
-            - No mínimo 8 caracteres<br>
-            - Pelo menos 1 letra maiúscula<br>
-            - Pelo menos 1 letra minúscula<br>
-            - Pelo menos 1 número<br>
-            - Pelo menos 1 símbolo especial (@$!%*?&).
-        `;
-        return false;
-    }
+//     if (!regexSenhaForte.test(senhaInput)) {
+//         mensagemErro.innerHTML = `
+//             A senha deve conter:<br>
+//             - No mínimo 8 caracteres<br>
+//             - Pelo menos 1 letra maiúscula<br>
+//             - Pelo menos 1 letra minúscula<br>
+//             - Pelo menos 1 número<br>
+//             - Pelo menos 1 símbolo especial (@$!%*?&).
+//         `;
+//         return false;
+//     }
 
-    if (senhaInput !== confirmarSenhaInput) {
-        mensagemErro.textContent = "As senhas não coincidem. Por favor, verifique.";
-        return false;
-    }
+//     if (senhaInput !== confirmarSenhaInput) {
+//         mensagemErro.textContent = "As senhas não coincidem. Por favor, verifique.";
+//         return false;
+//     }
 
-    mensagemErro.textContent = "";
-    return true;
-}
+//     mensagemErro.textContent = "";
+//     return true;
+// }
 
 async function cadastrarUsuario() {
     let nomeCadastroInput = document.querySelector('#nomeCadastroInput');

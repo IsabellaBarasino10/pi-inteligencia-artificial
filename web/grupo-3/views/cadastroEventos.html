@@ -69,6 +69,18 @@
             <div class="mb-3">
                 <label for="nomeEvento" class="form-label">Nome do evento</label>
                 <input type="text" class="form-control" id="nomeEventoInput" placeholder="Digite o nome do evento" required>
+                <button type="button" id="btn-gerar-nome" class="btn btn-secondary">Gerar nome</button>
+            </div>
+
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoria</label>
+                <select class="form-select" id="categoriaInput" required>
+                    <option value="" selected disabled>Escolha uma categoria</option>
+                    <option value="show">Show</option>
+                    <option value="bazar">Bazar</option>
+                    <option value="teatro">Teatro</option>
+                    <option value="corrida">Corrida</option>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -94,17 +106,6 @@
                     <span class="input-group-text" id="iconeLink"><i class="bi bi-link-45deg "></i></span>
                     <input type="text" class="form-control " id="urlSiteInput" placeholder="Digite a URL do site do evento " required>
                 </div>
-
-                <div class="mb-3">
-                    <label for="categoria" class="form-label">Categoria</label>
-                    <select class="form-select" id="categoriaInput" required>
-                        <option value="" selected disabled>Escolha uma categoria</option>
-                        <option value="show">Show</option>
-                        <option value="bazar">Bazar</option>
-                        <option value="teatro">Teatro</option>
-                        <option value="corrida">Corrida</option>
-                    </select>
-                </div>
                 
             <div class="mb-3">
                 <label for="organizador" class="form-label">Organizador do evento</label>
@@ -119,17 +120,17 @@
             
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
-                <input type="text" class="form-control" id="estadoInput" readonly required>
+                <input type="text" class="form-control" id="estadoInput" required>
             </div>
             
             <div class="mb-3">
                 <label for="cidade" class="form-label">Cidade</label>
-                <input type="text" class="form-control" id="cidadeInput" readonly required>
+                <input type="text" class="form-control" id="cidadeInput" required>
             </div>
             
             <div class="mb-3">
                 <label for="endereco" class="form-label">Endereço</label>
-                <input type="text" class="form-control" id="enderecoInput" readonly required>
+                <input type="text" class="form-control" id="enderecoInput" required>
             </div>
 
             <div class="mb-3">
@@ -137,25 +138,18 @@
                 <input type="text" class="form-control" id="numeroInput" placeholder="Ex.: 23" required>
             </div>
 
+            <div class="mb-4">
+                <label for="imagemLogo" class="form-label visually-hidden">Imagem da Logo</label>
+                <div class="input-group">
+                   <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                </div>
+            </div>
                             <!-- Alerta de Sucesso ou Erro (invisível inicialmente) -->
                             <div class="alert alert-success d-none alert-evento" role="alert"></div>
                             <div class="alert alert-danger d-none alert-evento" role="alert"></div>
 
             <button type="button" class="btn cadastrarEventoBtn w-100" id="cadastrarEventoBtn" onclick="cadastrarEvento()">Cadastrar Evento</button>
         </form>
-
-        <form action="/backend" method="POST" enctype="multipart/form-data">
-
-               <div class="mb-4">
-                <label for="imagemLogo" class="form-label visually-hidden">Imagem da Logo</label>
-                <div class="input-group">
-                   <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                </div>
-             </div>
-     
-             <button type="button" class="btn btn-primary w-100 mb-3" onclick="backend()">Utilizar IA</button>
-             
-             </form>
     </div>
     
 
@@ -206,16 +200,16 @@
     }
 
     // Ao perder o foco do campo de CEP (evento blur), fazer a busca
-    document.querySelector('#cepInput').addEventListener('blur', function () {
-        const cep = this.value;
-        buscarEndereco(cep);
-    });
+    // document.querySelector('#cepInput').addEventListener('blur', function () {
+    //     const cep = this.value;
+    //     buscarEndereco(cep);
+    // });
 
     // Atualizar a imagem de pré-visualização quando a URL da logo mudar
-    document.querySelector('#urlLogoInput').addEventListener('input', function() {
-        const logoUrl = this.value;
-        document.querySelector('#logoPreview').src = logoUrl;
-    });
+    // document.querySelector('#urlLogoInput').addEventListener('input', function() {
+    //     const logoUrl = this.value;
+    //     document.querySelector('#logoPreview').src = logoUrl;
+    // })
 
     // Máscara para o campo de data: DD/MM/YYYY
 document.querySelector('#dataInicioInput').addEventListener('input', function (e) {
